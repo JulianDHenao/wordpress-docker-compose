@@ -27,6 +27,27 @@ services:
     depends_on:
       - db
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: wordpress_phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root_password_segura
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    container_name: wordpress_proxy
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - wordpress
+
 volumes:
   db_data:
   wp_data:
